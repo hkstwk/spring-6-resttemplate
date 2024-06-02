@@ -27,14 +27,15 @@ public class BeerClientImpl implements BeerClient {
 
         ResponseEntity<String> stringResponseEntity =
                 restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, String.class);
+        System.out.println(stringResponseEntity.getBody());
 
         ResponseEntity<Map> mapResponseEntity =
                 restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, Map.class);
+        System.out.println(mapResponseEntity.getBody());
 
         ResponseEntity<JsonNode> jsonResponseEntity =
                 restTemplate.getForEntity(BASE_URL + GET_BEER_PATH, JsonNode.class);
-
-        System.out.println(stringResponseEntity.getBody());
+        jsonResponseEntity.getBody().findPath("content").forEach(jsonNode -> System.out.println(jsonNode.get("beerName").asText()));
 
         return null;
     }
