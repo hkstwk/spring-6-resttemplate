@@ -22,12 +22,10 @@ public class BeerClientImpl implements BeerClient {
     public Page<BeerDTO> listBeers() {
         RestTemplate restTemplate = restTemplateBuilder.build();
 
-        ResponseEntity<BeerDTOPageImpl> jsonResponseEntity =
+        ResponseEntity<BeerDTOPageImpl> response =
                 restTemplate.getForEntity(GET_BEER_PATH, BeerDTOPageImpl.class);
 
-        System.out.println(jsonResponseEntity.getBody());
-
-        return null;
+        return response.getBody();
     }
 }
 
