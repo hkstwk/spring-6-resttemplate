@@ -1,23 +1,35 @@
 package guru.springframework.spring6resttemplate.client;
 
-import guru.springframework.spring6resttemplate.model.BeerStyle;
+import guru.springframework.spring6resttemplate.model.BeerDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class BeerClientImplTest {
 
     @Autowired
-    BeerClientImpl bierClient;
+    BeerClientImpl beerClient;
+
+    @Test
+    void getBeerById() {
+        Page<BeerDTO> beerDTOPage = beerClient.listBeers();
+        BeerDTO dto = beerDTOPage.getContent().get(0);
+        BeerDTO beerByIdDTO = beerClient.getBeerById(dto.getId());
+        assertNotNull(beerByIdDTO);
+
+    }
 
     @Test
     void listBeersNoParams() {
-        bierClient.listBeers();
+        beerClient.listBeers();
     }
 
     @Test
     void listBeersWithNameParam() {
-        bierClient.listBeers("ALE", null, null, null);
+        beerClient.listBeers("ALE", null, null, null);
     }
 }
