@@ -1,10 +1,13 @@
 package guru.springframework.spring6resttemplate.client;
 
 import guru.springframework.spring6resttemplate.model.BeerDTO;
+import guru.springframework.spring6resttemplate.model.BeerStyle;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -13,6 +16,20 @@ class BeerClientImplTest {
 
     @Autowired
     BeerClientImpl beerClient;
+
+    @Test
+    void createBeer() {
+        BeerDTO newDto = BeerDTO.builder()
+                .price(BigDecimal.valueOf(123.45))
+                .beerName("H-Ale")
+                .beerStyle(BeerStyle.ALE)
+                .quantityOnHand(345)
+                .upc("1234234")
+                .build();
+
+        BeerDTO savedDto = beerClient.createBeer(newDto);
+        assertNotNull(savedDto);
+    }
 
     @Test
     void getBeerById() {
